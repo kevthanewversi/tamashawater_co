@@ -16,15 +16,10 @@ class Jtabbedpane extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTabbedPane tabbedPane;
-	JTabbedPane tabbedPane1;
-	JTabbedPane tabbedPane2;
-	private JPanel panel1;
-	private JPanel panel2;
-	private JPanel panel3;
-	JTextField halflt;
-	JTextField onelt;
-	JTextField fivelt;
-	JTextField apurchased;
+	JTabbedPane tabbedPane1, tabbedPane2;
+	private JPanel panel1, panel2, panel3;
+	JTextField halflt, onelt, fivelt, apurchased;
+	JTextField fname, sname, acredited, apaid;
 
 	public Jtabbedpane() {
 		// NOTE: to reduce the amount of code in this example, it uses
@@ -145,6 +140,46 @@ class Jtabbedpane extends JFrame implements ActionListener {
 
 		// panel contains all the form fields used to insert data into DB
 
+		// panel contains all the form fields used to insert data into DB
+		JLabel label1 = new JLabel(" First Name");
+		label1.setBounds(290, 30, 150, 20);
+		inscrpanel.add(label1);
+
+		fname = new JTextField();
+		fname.setBounds(290, 60, 150, 20);
+		inscrpanel.add(fname);
+
+		JLabel label2 = new JLabel("Surname");
+		label2.setBounds(290, 90, 150, 20);
+		inscrpanel.add(label2);
+
+		sname = new JTextField();
+		sname.setBounds(290, 120, 150, 20);
+		inscrpanel.add(sname);
+
+		JLabel label3 = new JLabel("Amount Credited");
+		label3.setBounds(290, 150, 150, 20);
+		inscrpanel.add(label3);
+
+		acredited = new JTextField();
+		acredited.setBounds(290, 180, 150, 20);
+		inscrpanel.add(acredited);
+
+		JLabel label4 = new JLabel("Amount Paid");
+		label4.setBounds(290, 210, 150, 20);
+		inscrpanel.add(label4);
+
+		apaid = new JTextField();
+		apaid.setBounds(290, 240, 150, 20);
+		inscrpanel.add(apaid);
+
+		JButton savecr = new JButton("Save");
+		savecr.setBounds(600, 270, 150, 20);
+		inscrpanel.add(savecr);
+
+		// action listener for the save button
+		savecr.addActionListener(saveeventcr);
+
 		// Create table with data queried from the table "VisitTable"
 		// add the model variable to the table then add table to panel
 		System.out.println(data[0] + " and " + data[1]);
@@ -180,6 +215,21 @@ class Jtabbedpane extends JFrame implements ActionListener {
 
 			// call insert to DB method with above parameters
 			Tamashadb.InserttoDB(onelitre, onelitre, fivelitre, purchased);
+		}
+	};
+
+	ActionListener saveeventcr = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String fullname = fname.getText();
+			String surname = sname.getText();
+			int amountcredited = Integer.parseInt(fivelt.getText());
+			int amountpaid = Integer.parseInt(apurchased.getText());
+
+			// call insert to DB method with above parameters
+			Tamashadb
+					.InserttoCDB(fullname, surname, amountcredited, amountpaid);
 		}
 	};
 

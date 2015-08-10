@@ -15,10 +15,6 @@ public class StockTableModel implements TableModel {
 		this.header = columnNames;
 		// and the rows
 		this.al = visitdata;
-		// al = new ArrayList();
-		// copy the rows into the ArrayList
-		// for (int i = 0; i < al.size(); ++i)
-		// al.add( visitdata[i]);
 	}
 
 	@Override
@@ -65,8 +61,10 @@ public class StockTableModel implements TableModel {
 	}
 
 	@Override
-	public boolean isCellEditable(int arg0, int arg1) {
+	public boolean isCellEditable(int row, int col) {
 		// TODO Auto-generated method stub
+		if (col > 1)
+			return true;
 		return false;
 	}
 

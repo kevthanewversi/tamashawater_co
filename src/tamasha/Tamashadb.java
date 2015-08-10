@@ -145,14 +145,14 @@ public class Tamashadb {
 
 		try {
 			// get values from textfield first
-			String insertDB = "INSERT INTO STOCK (HALFLT,ONELT,FIVELT,PURCHASED)  VALUES('"
+			String insertDB = "INSERT INTO STOCK (HALFLT,ONELT,FIVELT,PURCHASED,UNPURCHASED,TOTAL)  VALUES('"
 					+ onelitre
 					+ "','"
 					+ onelitre2
 					+ "','"
 					+ fivelitre
 					+ "','"
-					+ purchased + "' )";
+					+ fivelitre + "','" + fivelitre + "','" + purchased + "' )";
 			stmt1 = conn.createStatement();
 			stmt1.executeUpdate(insertDB);
 			System.out.println("Records entered to database");
@@ -224,11 +224,25 @@ public class Tamashadb {
 
 	}
 
-	// public void Inserttodb() {
-	// //get values fr0m textfied first
-	// String insertdb ="INSERT INTO STOCK" + "VALUES("++)";
-	//
-	// }
+	public static void InserttoCDB(String fullname, String surname,
+			int amountcredited, int amountpaid) {
+		try {
+			String insertCDB = "INSERT INTO STOCK (HALFLT,ONELT,FIVELT,PURCHASED,UNPURCHASED,TOTAL)  VALUES('"
+					+ fullname
+					+ "','"
+					+ surname
+					+ "','"
+					+ amountcredited
+					+ "','" + amountpaid + "' )";
+			stmt1 = conn.createStatement();
+			stmt1.executeUpdate(insertCDB);
+			System.out.println("Records entered to database");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		;
+	}
 
 	// public void DeletefromDB() {
 	// String deletefromdb = "DELETE FROM STOCK"
