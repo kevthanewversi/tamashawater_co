@@ -45,7 +45,7 @@ public class Tamashadb {
 	}// end main
 
 	/* db operations for the water bottles */
-	public static void createDB() {// if db exists just connect to it
+	public static void createDB() {// if DB exists just connect to it
 		try {
 
 			// STEP 4: Execute a query
@@ -124,9 +124,7 @@ public class Tamashadb {
 			}
 			// Close the resultset, statement and the connection
 			rs.close();
-			closeDBconnection();
-			// System.out.println("Hey " + visitdata.size());
-
+			// closeDBconnection();
 			System.out.println("Finished fetching from  database...");
 
 		} catch (Exception e) {
@@ -139,16 +137,16 @@ public class Tamashadb {
 	}
 
 	// before method is called connect to db first
-	public static void InserttoDB(int onelitre, int onelitre2, int fivelitre,
+	public static void InserttoDB(int halflitre, int onelitre, int fivelitre,
 			int purchased) {
 		ConnecttoDB();
 
 		try {
 			// get values from textfield first
 			String insertDB = "INSERT INTO STOCK (HALFLT,ONELT,FIVELT,PURCHASED,UNPURCHASED,TOTAL)  VALUES('"
-					+ onelitre
+					+ halflitre
 					+ "','"
-					+ onelitre2
+					+ onelitre
 					+ "','"
 					+ fivelitre
 					+ "','"
@@ -210,7 +208,7 @@ public class Tamashadb {
 			}
 			// Close the resultset, statement and the connection
 			rs.close();
-			closeDBconnection();
+			// closeDBconnection();
 			stmt.close();
 
 			System.out.println("Finished fetching from  database...");
@@ -227,13 +225,13 @@ public class Tamashadb {
 	public static void InserttoCDB(String fullname, String surname,
 			int amountcredited, int amountpaid) {
 		try {
-			String insertCDB = "INSERT INTO STOCK (HALFLT,ONELT,FIVELT,PURCHASED,UNPURCHASED,TOTAL)  VALUES('"
+			String insertCDB = "INSERT INTO CREDITORS (FNAME,SNAME,ACREDITED,APAID,AOWED)  VALUES('"
 					+ fullname
 					+ "','"
 					+ surname
 					+ "','"
 					+ amountcredited
-					+ "','" + amountpaid + "' )";
+					+ "','" + amountpaid + "','" + amountpaid + "' )";
 			stmt1 = conn.createStatement();
 			stmt1.executeUpdate(insertCDB);
 			System.out.println("Records entered to database");

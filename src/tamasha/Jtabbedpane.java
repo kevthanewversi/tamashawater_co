@@ -182,7 +182,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 
 		// Create table with data queried from the table "VisitTable"
 		// add the model variable to the table then add table to panel
-		System.out.println(data[0] + " and " + data[1]);
+		System.out.println(data[0] + " and " + data[1]); // delete this
 
 		model = new CreditorsTableModel(Tamashadb.visitdataC,
 				Tamashadb.columnNamesC);
@@ -214,7 +214,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 			int purchased = Integer.parseInt(apurchased.getText());
 
 			// call insert to DB method with above parameters
-			Tamashadb.InserttoDB(onelitre, onelitre, fivelitre, purchased);
+			Tamashadb.InserttoDB(halflitre, onelitre, fivelitre, purchased);
 		}
 	};
 
@@ -224,8 +224,8 @@ class Jtabbedpane extends JFrame implements ActionListener {
 			// TODO Auto-generated method stub
 			String fullname = fname.getText();
 			String surname = sname.getText();
-			int amountcredited = Integer.parseInt(fivelt.getText());
-			int amountpaid = Integer.parseInt(apurchased.getText());
+			int amountcredited = Integer.parseInt(acredited.getText());
+			int amountpaid = Integer.parseInt(apaid.getText());
 
 			// call insert to DB method with above parameters
 			Tamashadb
