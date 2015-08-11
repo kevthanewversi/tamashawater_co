@@ -3,6 +3,7 @@ package tamasha;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -182,11 +183,24 @@ class Jtabbedpane extends JFrame implements ActionListener {
 
 		// Create table with data queried from the table "VisitTable"
 		// add the model variable to the table then add table to panel
-		System.out.println(data[0] + " and " + data[1]); // delete this
 
 		model = new CreditorsTableModel(Tamashadb.visitdataC,
 				Tamashadb.columnNamesC);
 		creditors = new JTable(model);
+
+		// to select delete several rows at once
+		DeleteRowFromTableAction deleteAction = new DeleteRowFromTableAction(
+				creditors, model);
+
+		JToolBar tb = new JToolBar();
+		tb.add(deleteAction);
+
+		InputMap im = creditors
+				.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		ActionMap am = creditors.getActionMap();
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteRow");
+		am.put("deleteRow", deleteAction);
+
 		JScrollPane tableContainer = new JScrollPane(creditors);
 
 		viewcrpanel.add(tableContainer);
