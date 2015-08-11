@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-public class StockTableModel implements TableModel {
+public class StockTableModel implements DefaultTableModel {
 	ArrayList al;
 	ArrayList header;
 
