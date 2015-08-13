@@ -5,11 +5,25 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.Action;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-public class DeleteRowFromTableAction implements Action {
+public class DeleteRowFromTableAction extends
+		AbstractTableAction<JTable, CreditorsTableModel> {
 
 	public DeleteRowFromTableAction(JTable creditors, CreditorsTableModel model) {
 		// TODO Auto-generated constructor stub
+		super(creditors, model);
+		putValue(NAME, "Delete selected rows");
+		putValue(SHORT_DESCRIPTION, "Delete selected rows");
+		creditors.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						setEnabled(getTable().getSelectedRowCount() > 0);
+					}
+				});
+		setEnabled(getTable().getSelectedRowCount() > 0);
 	}
 
 	@Override
