@@ -118,6 +118,19 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		model = new StockTableModel(Tamashadb.visitdata, Tamashadb.columnNames);
 		stock = new JTable(model);
 		stock.setFillsViewportHeight(true);
+
+		// to select delete several rows at once
+		DeleteRowFromStockTableAction deleteAction = new DeleteRowFromStockTableAction(
+				stock, model);
+
+		JToolBar tb = new JToolBar();
+		tb.add(deleteAction);
+
+		InputMap im = stock
+				.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		ActionMap am = stock.getActionMap();
+		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteRow");
+		am.put("deleteRow", deleteAction);
 		JScrollPane tableContainer = new JScrollPane(stock);
 
 		viewpanel.add(tableContainer);
