@@ -1,11 +1,13 @@
 package tamasha;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class CreditorsTableModel implements TableModel {
+public class CreditorsTableModel extends DefaultTableModel {
 	ArrayList al;
 	ArrayList header;
 
