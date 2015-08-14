@@ -7,7 +7,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class CreditorsTableModel extends DefaultTableModel {
+public class CreditorsTableModel extends AbstractTableModel {
 	ArrayList al;
 	ArrayList header;
 
