@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class CreditorsTableModel extends AbstractTableModel {
+public class CreditorsTableModel extends DefaultTableModel implements
+		TableModel {
 	ArrayList al;
 	ArrayList header;
 

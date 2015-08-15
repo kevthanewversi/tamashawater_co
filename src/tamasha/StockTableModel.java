@@ -7,7 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class StockTableModel extends AbstractTableModel {
+public class StockTableModel extends DefaultTableModel implements TableModel {
 	ArrayList al;
 	ArrayList header;
 
