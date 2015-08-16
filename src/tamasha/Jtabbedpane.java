@@ -54,14 +54,14 @@ class Jtabbedpane extends JFrame implements ActionListener {
 	public void createPage1() {
 		JTable stock;
 		StockTableModel model;
-		JButton SaveBtn, DelBtn, ExitBtn;
 		JPanel inspanel = new JPanel(new GridLayout(20, 1));
 		JPanel viewpanel = new JPanel();
+		viewpanel.setLayout(new BoxLayout(viewpanel, BoxLayout.Y_AXIS));
 
 		// tabbedPane1 inside the stock panel
 		tabbedPane1 = new JTabbedPane();
 		tabbedPane1.setTabPlacement(JTabbedPane.LEFT);
-		tabbedPane1.setBounds(0, 0, 800, 600);
+		// tabbedPane1.setBounds(0, 0, 800, 600);
 		tabbedPane1.addTab("Record Stock Data", null, inspanel); // add icons
 		tabbedPane1.addTab("View Stock", null, viewpanel);
 
@@ -106,41 +106,35 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		save.addActionListener(saveevent);
 
 		// viewPanel where you can view stock records in DB
-
-		// Create table with data queried from the table "VisitTable"
-
 		// add the model variable to the table then add table to panel
-		// creditors = new JTable(model);
-		// creditors.setFillsViewportHeight(true);
 
-		// add table to scroll pane
 		Tamashadb.FetchfromDB();
 		model = new StockTableModel(Tamashadb.visitdata, Tamashadb.columnNames);
 		stock = new JTable(model);
-		stock.setFillsViewportHeight(true);
 
 		// to select delete several rows at once
 		DeleteRowFromStockTableAction deleteAction = new DeleteRowFromStockTableAction(
 				stock, model);
 
-		JToolBar tb = new JToolBar();
+		JToolBar tb = new JToolBar("Delete");
+		tb.setFloatable(false);
 		tb.add(deleteAction);
 
-		InputMap im = stock
-				.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		InputMap im = stock.getInputMap(JTable.WHEN_FOCUSED);
 		ActionMap am = stock.getActionMap();
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteRow");
 		am.put("deleteRow", deleteAction);
-		JScrollPane tableContainer = new JScrollPane(stock);
+		JScrollPane tableContainer = new JScrollPane(stock); // add table to
+		// scroll pane
 
 		viewpanel.add(tableContainer);
+		viewpanel.add(tb);
 
 	}
 
 	public void createPage2() {
 		JTable creditors;
 		CreditorsTableModel model;
-		JButton SaveBtn, DelBtn, ExitBtn;
 		JPanel inscrpanel = new JPanel(new GridLayout(20, 1));
 		JPanel viewcrpanel = new JPanel();
 
@@ -150,7 +144,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		tabbedPane2.setBounds(0, 0, 800, 600);
 		tabbedPane2.addTab("Record Creditor's Data", null, inscrpanel); // addicons
 		tabbedPane2.addTab("View Creditor's Reports", null, viewcrpanel);
-		ArrayList data[] = Tamashadb.FetchfromCDB();
+		Vector data[] = Tamashadb.FetchfromCDB();
 
 		// panel contains all the form fields used to insert data into DB
 
@@ -215,9 +209,8 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		am.put("deleteRow", deleteAction);
 
 		JScrollPane tableContainer = new JScrollPane(creditors);
-
+		tableContainer.add(tb);
 		viewcrpanel.add(tableContainer);
-
 	}
 
 	public void createPage3() {

@@ -1,18 +1,19 @@
 package tamasha;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class StockTableModel extends DefaultTableModel implements TableModel {
-	ArrayList al;
-	ArrayList header;
+public class StockTableModel extends DefaultTableModel {
+	Vector al;
+	Vector header;
 
 	// constructor
-	StockTableModel(ArrayList visitdata, ArrayList columnNames) {
+	StockTableModel(Vector visitdata, Vector columnNames) {
 		// save the header
 		this.header = columnNames;
 		// and the rows
@@ -53,7 +54,7 @@ public class StockTableModel extends DefaultTableModel implements TableModel {
 	@Override
 	public Object getValueAt(int row, int col) {
 		// TODO Auto-generated method stub
-		ArrayList rowList = (ArrayList) al.get(row);
+		Vector rowList = (Vector) al.get(row);
 		String result = null;
 		if (col < rowList.size()) {
 			result = rowList.get(col).toString();

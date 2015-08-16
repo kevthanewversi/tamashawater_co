@@ -30,12 +30,12 @@ public class Tamashadb {
 	static final String PASS = "";
 	static Connection conn;
 	static ResultSet rs;
-	public static ArrayList columnNames;
-	public static ArrayList visitdata;
+	public static Vector columnNames;
+	public static Vector visitdata;
 	static Statement stmt;
 	static Statement stmt1;
-	public static ArrayList columnNamesC;
-	public static ArrayList visitdataC;
+	public static Vector columnNamesC;
+	public static Vector visitdataC;
 
 	public static void main(String[] args) {
 		createDB();
@@ -89,10 +89,10 @@ public class Tamashadb {
 		}
 	}
 
-	public static ArrayList[] FetchfromDB() {
+	public static Vector[] FetchfromDB() {
 		// create cursor to fetch
-		columnNames = new ArrayList();
-		visitdata = new ArrayList<Object[]>();
+		columnNames = new Vector();
+		visitdata = new Vector<Object[]>();
 		/*
 		 * SQL query that retrieves all the information
 		 */
@@ -115,7 +115,7 @@ public class Tamashadb {
 			}
 			// Get row data
 			while ((rs != null) && (rs.next())) {
-				ArrayList row = new ArrayList(columns);
+				Vector row = new Vector(columns);
 				for (int i = 1; i <= columns; i++) {
 					row.add(rs.getObject(i));
 				}
@@ -130,7 +130,7 @@ public class Tamashadb {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ArrayList[] data = { visitdata, columnNames };
+		Vector[] data = { visitdata, columnNames };
 		System.out.println(data[1].size() + " " + data[0].size());
 		return data;
 
@@ -173,10 +173,10 @@ public class Tamashadb {
 
 	/* db operations for the creditors */
 
-	public static ArrayList[] FetchfromCDB() {
+	public static Vector[] FetchfromCDB() {
 		// create cursor to fetch
-		columnNamesC = new ArrayList();
-		visitdataC = new ArrayList<Object[]>();
+		columnNamesC = new Vector();
+		visitdataC = new Vector<Object[]>();
 		/*
 		 * SQL query that retrieves all the information
 		 */
@@ -199,7 +199,7 @@ public class Tamashadb {
 			}
 			// Get row data
 			while ((rs != null) && (rs.next())) {
-				ArrayList rowC = new ArrayList(columns);
+				Vector rowC = new Vector(columns);
 				for (int i = 1; i <= columns; i++) {
 					rowC.add(rs.getObject(i));
 				}
@@ -216,7 +216,7 @@ public class Tamashadb {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ArrayList[] data = { visitdataC, columnNamesC };
+		Vector[] data = { visitdataC, columnNamesC };
 		System.out.println(data[1].size() + " " + data[0].size());
 		return data;
 

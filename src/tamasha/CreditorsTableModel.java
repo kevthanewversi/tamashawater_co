@@ -8,21 +8,16 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class CreditorsTableModel extends DefaultTableModel implements
-		TableModel {
-	ArrayList al;
-	ArrayList header;
+public class CreditorsTableModel extends DefaultTableModel {
+	Vector al;
+	Vector header;
 
 	// constructor
-	CreditorsTableModel(ArrayList visitdata, ArrayList columnNames) {
+	CreditorsTableModel(Vector visitdata, Vector columnNames) {
 		// save the header
 		this.header = columnNames;
 		// and the rows
 		this.al = visitdata;
-		// al = new ArrayList();
-		// copy the rows into the ArrayList
-		// for (int i = 0; i < al.size(); ++i)
-		// al.add( visitdata[i]);
 	}
 
 	@Override
@@ -59,7 +54,7 @@ public class CreditorsTableModel extends DefaultTableModel implements
 	@Override
 	public Object getValueAt(int row, int col) {
 		// TODO Auto-generated method stub
-		ArrayList rowList = (ArrayList) al.get(row);
+		Vector rowList = (Vector) al.get(row);
 		String result = null;
 		if (col < rowList.size()) {
 			result = rowList.get(col).toString();
@@ -69,9 +64,12 @@ public class CreditorsTableModel extends DefaultTableModel implements
 	}
 
 	@Override
-	public boolean isCellEditable(int arg0, int arg1) {
+	public boolean isCellEditable(int row, int col) {
 		// TODO Auto-generated method stub
+		if (col > 1)
+			return true;
 		return false;
+
 	}
 
 	@Override
