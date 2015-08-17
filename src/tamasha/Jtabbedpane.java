@@ -53,7 +53,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 
 	public void createPage1() {
 		JTable stock;
-		StockTableModel model;
+		DefaultTableModel model;
 		JPanel inspanel = new JPanel(new GridLayout(20, 1));
 		JPanel viewpanel = new JPanel();
 		viewpanel.setLayout(new BoxLayout(viewpanel, BoxLayout.Y_AXIS));
@@ -109,7 +109,8 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		// add the model variable to the table then add table to panel
 
 		Tamashadb.FetchfromDB();
-		model = new StockTableModel(Tamashadb.visitdata, Tamashadb.columnNames);
+		model = new DefaultTableModel(Tamashadb.visitdata,
+				Tamashadb.columnNames);
 		stock = new JTable(model);
 
 		// to select delete several rows at once
@@ -134,7 +135,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 
 	public void createPage2() {
 		JTable creditors;
-		CreditorsTableModel model;
+		DefaultTableModel model;
 		JPanel inscrpanel = new JPanel(new GridLayout(20, 1));
 		JPanel viewcrpanel = new JPanel();
 
@@ -191,7 +192,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		// Create table with data queried from the table "VisitTable"
 		// add the model variable to the table then add table to panel
 
-		model = new CreditorsTableModel(Tamashadb.visitdataC,
+		model = new DefaultTableModel(Tamashadb.visitdataC,
 				Tamashadb.columnNamesC);
 		creditors = new JTable(model);
 

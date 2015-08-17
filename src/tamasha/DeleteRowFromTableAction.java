@@ -13,9 +13,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class DeleteRowFromTableAction extends
-		AbstractTableAction<JTable, CreditorsTableModel> {
+		AbstractTableAction<JTable, DefaultTableModel> {
 
-	public DeleteRowFromTableAction(JTable creditors, CreditorsTableModel model) {
+	public DeleteRowFromTableAction(JTable creditors, DefaultTableModel model) {
 		// TODO Auto-generated constructor stub
 		super(creditors, model);
 		putValue(NAME, "Delete selected rows");
@@ -37,7 +37,7 @@ public class DeleteRowFromTableAction extends
 		JTable table = getTable();
 		if (table.getSelectedRowCount() > 0) {
 			List<Vector> selectedRows = new ArrayList<>(25);
-			CreditorsTableModel model = getModel();
+			DefaultTableModel model = getModel();
 			Vector rowData = model.getDataVector();
 			for (int row : table.getSelectedRows()) {
 				int modelRow = table.convertRowIndexToModel(row);
