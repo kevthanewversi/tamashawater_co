@@ -11,7 +11,7 @@ public class StockTable {
 
 	public StockTable(Object[][] visitdata2, ArrayList columnNames) {
 		stock = new JTable(model);
-		stock.setFillsViewportHeight(true);
+		// stock.setFillsViewportHeight(true);
 	}
 
 }
