@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -45,11 +46,17 @@ public class DeleteRowFromTableAction extends
 				selectedRows.add(rowValue);
 			}
 
-			for (Vector rowValue : selectedRows) {
-				int rowIndex = rowData.indexOf(rowValue);
-				model.removeRow(rowIndex);
+			int a = JOptionPane.showConfirmDialog(null,
+					"Delete this stock entry?", "Delete Stock Entry ",
+					JOptionPane.YES_NO_OPTION);
+			if (a == JOptionPane.YES_OPTION) {
+				for (Vector rowValue : selectedRows) {
+					int rowIndex = rowData.indexOf(rowValue);
+					model.removeRow(rowIndex);
+				}
 			}
 		}
+
 	}
 
 	@Override

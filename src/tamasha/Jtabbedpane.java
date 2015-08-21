@@ -61,7 +61,6 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		// tabbedPane1 inside the stock panel
 		tabbedPane1 = new JTabbedPane();
 		tabbedPane1.setTabPlacement(JTabbedPane.LEFT);
-		// tabbedPane1.setBounds(0, 0, 800, 600);
 		tabbedPane1.addTab("Record Stock Data", null, inspanel); // add icons
 		tabbedPane1.addTab("View Stock", null, viewpanel);
 
@@ -138,11 +137,11 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		DefaultTableModel model;
 		JPanel inscrpanel = new JPanel(new GridLayout(20, 1));
 		JPanel viewcrpanel = new JPanel();
+		viewcrpanel.setLayout(new BoxLayout(viewcrpanel, BoxLayout.Y_AXIS));
 
 		// tabbedPane2 inside the creditor's report panel
 		tabbedPane2 = new JTabbedPane();
 		tabbedPane2.setTabPlacement(JTabbedPane.LEFT);
-		tabbedPane2.setBounds(0, 0, 800, 600);
 		tabbedPane2.addTab("Record Creditor's Data", null, inscrpanel); // addicons
 		tabbedPane2.addTab("View Creditor's Reports", null, viewcrpanel);
 		Vector data[] = Tamashadb.FetchfromCDB();
@@ -201,8 +200,10 @@ class Jtabbedpane extends JFrame implements ActionListener {
 				creditors, model);
 
 		JToolBar tb = new JToolBar();
+		tb.setFloatable(false);
 		tb.add(deleteAction);
 
+		// for the delete key binding
 		InputMap im = creditors
 				.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		ActionMap am = creditors.getActionMap();
@@ -210,8 +211,9 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		am.put("deleteRow", deleteAction);
 
 		JScrollPane tableContainer = new JScrollPane(creditors);
-		tableContainer.add(tb);
 		viewcrpanel.add(tableContainer);
+		viewcrpanel.add(tb);
+
 	}
 
 	public void createPage3() {
