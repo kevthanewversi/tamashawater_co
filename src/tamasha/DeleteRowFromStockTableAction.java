@@ -33,7 +33,7 @@ public class DeleteRowFromStockTableAction extends
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("...");
+		System.out.println("Delete Key has been pressed");
 		JTable table = getTable();
 		if (table.getSelectedRowCount() > 0) {
 			List<Vector> selectedRows = new ArrayList<>(25);
