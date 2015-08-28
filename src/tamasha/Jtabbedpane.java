@@ -312,6 +312,16 @@ class Jtabbedpane extends JFrame implements ActionListener {
 				if (a == JOptionPane.YES_OPTION) {
 					for (Vector rowValue : selectedRows) {
 						int rowIndex = rowData.indexOf(rowValue);
+						System.out.println(rowValue.firstElement()); // start
+																		// here
+																		// to do
+																		// some
+																		// crazy
+																		// coding
+																		// shiit
+																		// in
+																		// the
+																		// morning
 						model.removeRow(rowIndex);
 					}
 				}
