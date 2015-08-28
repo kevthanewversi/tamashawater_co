@@ -5,9 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import tamasha.Tamashadb;
 
@@ -113,6 +116,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		stock = new JTable(model);
 		JScrollPane tableContainer = new JScrollPane(stock); // add table to
 		// scroll pane
+		viewpanel.add(tableContainer);
 
 		// to select delete several rows at once
 		DeleteRowFromStockTableAction deleteAction = new DeleteRowFromStockTableAction(
@@ -122,16 +126,18 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		// tb.setFloatable(false);
 		// tb.add(deleteAction);
 
-		// stock.getInputMap().put(KeyStroke.getKeyStroke("ENTER"),
-		// "doEnterAction");
-		//
-		// stock.getActionMap().put("doEnterAction", deleteAction);
-		InputMap im = tableContainer.getInputMap(JTable.WHEN_FOCUSED);
-		ActionMap am = tableContainer.getActionMap();
+		InputMap im = stock
+				.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteRow");
+		ActionMap am = stock.getActionMap();
+		// am.put("deleteRow", new AbstractAction() {
+		// public void actionPerformed(ActionEvent e) {
+		// System.out.println("out");
+		// }
+		// });
+		// im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteRow");
 		am.put("deleteRow", deleteAction);
 
-		viewpanel.add(tableContainer);
 		// viewpanel.add(tb);
 
 	}
@@ -263,6 +269,54 @@ class Jtabbedpane extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+
+	}
+
+	public class DeleteRowFromStockTableAction extends
+			AbstractStockTableAction<JTable, DefaultTableModel> {
+
+		public DeleteRowFromStockTableAction(JTable stock,
+				DefaultTableModel model) {
+			// TODO Auto-generated constructor stub
+			super(stock, model);
+			putValue(NAME, "Delete selected rows");
+			putValue(SHORT_DESCRIPTION, "Delete selected rows");
+			stock.getSelectionModel().addListSelectionListener(
+					new ListSelectionListener() {
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							setEnabled(getTable().getSelectedRowCount() > 0);
+						}
+					});
+			setEnabled(getTable().getSelectedRowCount() > 0);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("Delete Key has been pressed");
+			JTable table = getTable();
+			if (table.getSelectedRowCount() > 0) {
+				List<Vector> selectedRows = new ArrayList<>(25);
+				DefaultTableModel model = getModel();
+				Vector rowData = model.getDataVector();
+				for (int row : table.getSelectedRows()) {
+					int modelRow = table.convertRowIndexToModel(row);
+					Vector rowValue = (Vector) rowData.get(modelRow);
+					selectedRows.add(rowValue);
+				}
+
+				int a = JOptionPane.showConfirmDialog(null,
+						"Delete this stock entry?", "Delete Stock Entry ",
+						JOptionPane.YES_NO_OPTION);
+				if (a == JOptionPane.YES_OPTION) {
+					for (Vector rowValue : selectedRows) {
+						int rowIndex = rowData.indexOf(rowValue);
+						model.removeRow(rowIndex);
+					}
+				}
+			}
+		}
 
 	}
 }

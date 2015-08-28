@@ -13,9 +13,9 @@ public class AbstractStockTableAction<T extends JTable, M extends DefaultTableMo
 	private M model;
 
 	// constructor
-	public AbstractStockTableAction(T table, DefaultTableModel model2) {
+	public AbstractStockTableAction(T table, M model2) {
 		this.table = table;
-		this.model = (M) model2;
+		this.model = model2;
 	}
 
 	// getters
