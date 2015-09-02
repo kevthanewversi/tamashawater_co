@@ -160,9 +160,17 @@ public class Tamashadb {
 		}
 	}
 
-	// public void DeletefromDB() {
-	// String deletefromdb = "DELETE FROM STOCK"
-	// }
+	public static void DeletefromDB(int rowID) {
+		try {
+			String deletefromdb = "DELETE FROM STOCK WHERE ID ='" + rowID
+					+ "' ";
+			stmt1 = conn.createStatement();
+			stmt1.executeUpdate(deletefromdb);
+			System.out.println("Records deleted from database");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void UpdateinDB() {
 	}
@@ -239,12 +247,20 @@ public class Tamashadb {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		;
+
 	}
 
-	// public void DeletefromDB() {
-	// String deletefromdb = "DELETE FROM STOCK"
-	// }
+	public static void DeletefromCDB(int rowID) {
+		try {
+			String deletefromdb = "DELETE FROM CREDITORS  WHERE ID ='" + rowID
+					+ "' ";
+			stmt1 = conn.createStatement();
+			stmt1.executeUpdate(deletefromdb);
+			System.out.println("Records deleted from database");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void UpdateinCDB() {
 	}

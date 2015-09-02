@@ -12,7 +12,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-public class DeleteRowFromStockTableAction extends
+public final class DeleteRowFromStockTableAction extends
 		AbstractStockTableAction<JTable, DefaultTableModel> {
 
 	public DeleteRowFromStockTableAction(JTable stock, DefaultTableModel model) {
@@ -50,7 +50,10 @@ public class DeleteRowFromStockTableAction extends
 					JOptionPane.YES_NO_OPTION);
 			if (a == JOptionPane.YES_OPTION) {
 				for (Vector rowValue : selectedRows) {
-					int rowIndex = rowData.indexOf(rowValue);
+					int rowIndex = rowData.indexOf(rowValue); // delete entry
+																// from database
+					Tamashadb.DeletefromDB((int) rowValue.firstElement());
+
 					model.removeRow(rowIndex);
 				}
 			}

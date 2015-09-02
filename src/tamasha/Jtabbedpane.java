@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -13,6 +14,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import tamasha.Tamashadb;
+import tamasha.DeleteRowFromStockTableAction;
 
 class Jtabbedpane extends JFrame implements ActionListener {
 	/**
@@ -24,6 +26,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 	private JPanel panel1, panel2, panel3;
 	JTextField halflt, onelt, fivelt, apurchased;
 	JTextField fname, sname, acredited, apaid;
+	DeleteRowFromStockTableAction deleteAction;
 
 	public Jtabbedpane() {
 		// NOTE: to reduce the amount of code in this example, it uses
@@ -119,8 +122,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		viewpanel.add(tableContainer);
 
 		// to select delete several rows at once
-		DeleteRowFromStockTableAction deleteAction = new DeleteRowFromStockTableAction(
-				stock, model);
+		deleteAction = new DeleteRowFromStockTableAction(stock, model);
 
 		// JToolBar tb = new JToolBar("Delete");
 		// tb.setFloatable(false);
@@ -130,13 +132,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 				.getInputMap(JTable.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteRow");
 		ActionMap am = stock.getActionMap();
-		// am.put("deleteRow", new AbstractAction() {
-		// public void actionPerformed(ActionEvent e) {
-		// System.out.println("out");
-		// }
-		// });
-		// im.put(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0), "deleteRow");
-		am.put("deleteRow", deleteAction);
+		am.put("deleteRow", new DeleteRowFromStockTableAction(stock, model));
 
 		// viewpanel.add(tb);
 
@@ -206,7 +202,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		creditors = new JTable(model);
 
 		// to select delete several rows at once
-		DeleteRowFromTableAction deleteAction = new DeleteRowFromTableAction(
+		DeleteRowFromCreditorsTableAction deleteAction = new DeleteRowFromCreditorsTableAction(
 				creditors, model);
 
 		JToolBar tb = new JToolBar();
@@ -312,21 +308,69 @@ class Jtabbedpane extends JFrame implements ActionListener {
 				if (a == JOptionPane.YES_OPTION) {
 					for (Vector rowValue : selectedRows) {
 						int rowIndex = rowData.indexOf(rowValue);
-						System.out.println(rowValue.firstElement()); // start
-																		// here
-																		// to do
-																		// some
-																		// crazy
-																		// coding
-																		// shiit
-																		// in
-																		// the
-																		// morning
+						// delete entry from database
+						Tamashadb.DeletefromDB((int) rowValue.firstElement());
+
 						model.removeRow(rowIndex);
 					}
 				}
 			}
 		}
+	}
+
+	public class DeleteRowFromCreditorsTableAction extends
+			AbstractTableAction<JTable, DefaultTableModel> {
+
+		/**
+ * 
+ */
+		private static final long serialVersionUID = 5133264544084101883L;
+
+		public DeleteRowFromCreditorsTableAction(JTable creditors,
+				DefaultTableModel model) {
+			// TODO Auto-generated constructor stub
+			super(creditors, model);
+			putValue(NAME, "Delete selected rows");
+			putValue(SHORT_DESCRIPTION, "Delete selected rows");
+			creditors.getSelectionModel().addListSelectionListener(
+					new ListSelectionListener() {
+						@Override
+						public void valueChanged(ListSelectionEvent e) {
+							setEnabled(getTable().getSelectedRowCount() > 0);
+						}
+					});
+			setEnabled(getTable().getSelectedRowCount() > 0);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println("...");
+			JTable table = getTable();
+			if (table.getSelectedRowCount() > 0) {
+				List<Vector> selectedRows = new ArrayList<>(25);
+				DefaultTableModel model = getModel();
+				Vector rowData = model.getDataVector();
+				for (int row : table.getSelectedRows()) {
+					int modelRow = table.convertRowIndexToModel(row);
+					Vector rowValue = (Vector) rowData.get(modelRow);
+					selectedRows.add(rowValue);
+				}
+
+				int a = JOptionPane.showConfirmDialog(null,
+						"Delete this stock entry?", "Delete Stock Entry ",
+						JOptionPane.YES_NO_OPTION);
+				if (a == JOptionPane.YES_OPTION) {
+					for (Vector rowValue : selectedRows) {
+						int rowIndex = rowData.indexOf(rowValue);
+						Tamashadb.DeletefromCDB((int) rowValue.firstElement());
+						model.removeRow(rowIndex);
+					}
+				}
+			}
+
+		}
 
 	}
+
 }
