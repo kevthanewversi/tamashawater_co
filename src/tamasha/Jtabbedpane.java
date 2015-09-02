@@ -12,6 +12,8 @@ import java.util.Vector;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import tamasha.Tamashadb;
 import tamasha.DeleteRowFromStockTableAction;
@@ -369,8 +371,23 @@ class Jtabbedpane extends JFrame implements ActionListener {
 				}
 			}
 
+			final JTable stock = new JTable();
+			stock.getModel().addTableModelListener(new TableModelListener() {
+				@Override
+				public void tableChanged(TableModelEvent e) {
+					switch (e.getType()) {
+					case TableModelEvent.INSERT:
+						stock
+
+					case TableModelEvent.DELETE:
+
+					case TableModelEvent.UPDATE:
+
+					}
+				}
+
+			});
+
 		}
-
 	}
-
 }
