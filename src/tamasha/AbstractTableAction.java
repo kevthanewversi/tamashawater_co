@@ -7,13 +7,13 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-public class AbstractTableAction<T extends JTable, M extends DefaultTableModel>
+public class AbstractTableAction<T extends JTable, M extends CreditorsTableModel>
 		extends AbstractAction {
 
 	private T table;
 	private M model;
 
-	public AbstractTableAction(T table, DefaultTableModel model2) {
+	public AbstractTableAction(T table, CreditorsTableModel model2) {
 		this.table = table;
 		this.model = (M) model2;
 	}

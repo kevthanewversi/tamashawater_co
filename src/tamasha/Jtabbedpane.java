@@ -61,7 +61,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 
 	public void createPage1() {
 		JTable stock;
-		DefaultTableModel model;
+		StockTableModel model;
 		JPanel inspanel = new JPanel(new GridLayout(20, 1));
 		JPanel viewpanel = new JPanel();
 		viewpanel.setLayout(new BoxLayout(viewpanel, BoxLayout.Y_AXIS));
@@ -116,8 +116,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		// add the model variable to the table then add table to panel
 
 		Tamashadb.FetchfromDB();
-		model = new DefaultTableModel(Tamashadb.visitdata,
-				Tamashadb.columnNames);
+		model = new StockTableModel(Tamashadb.visitdata, Tamashadb.columnNames);
 		stock = new JTable(model);
 		JScrollPane tableContainer = new JScrollPane(stock); // add table to
 		// scroll pane
@@ -142,7 +141,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 
 	public void createPage2() {
 		JTable creditors;
-		DefaultTableModel model;
+		CreditorsTableModel model;
 		JPanel inscrpanel = new JPanel(new GridLayout(20, 1));
 		JPanel viewcrpanel = new JPanel();
 		viewcrpanel.setLayout(new BoxLayout(viewcrpanel, BoxLayout.Y_AXIS));
@@ -199,7 +198,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		// Create table with data queried from the table "VisitTable"
 		// add the model variable to the table then add table to panel
 
-		model = new DefaultTableModel(Tamashadb.visitdataC,
+		model = new CreditorsTableModel(Tamashadb.visitdataC,
 				Tamashadb.columnNamesC);
 		creditors = new JTable(model);
 
@@ -271,10 +270,9 @@ class Jtabbedpane extends JFrame implements ActionListener {
 	}
 
 	public class DeleteRowFromStockTableAction extends
-			AbstractStockTableAction<JTable, DefaultTableModel> {
+			AbstractStockTableAction<JTable, StockTableModel> {
 
-		public DeleteRowFromStockTableAction(JTable stock,
-				DefaultTableModel model) {
+		public DeleteRowFromStockTableAction(JTable stock, StockTableModel model) {
 			// TODO Auto-generated constructor stub
 			super(stock, model);
 			putValue(NAME, "Delete selected rows");
@@ -295,12 +293,18 @@ class Jtabbedpane extends JFrame implements ActionListener {
 			System.out.println("Delete Key has been pressed");
 			JTable table = getTable();
 			if (table.getSelectedRowCount() > 0) {
-				List<Vector> selectedRows = new ArrayList<>(25);
-				DefaultTableModel model = getModel();
+				List<Vector> selectedRows = new ArrayList<>(10000);
+				StockTableModel model = getModel();
 				Vector rowData = model.getDataVector();
 				for (int row : table.getSelectedRows()) {
-					int modelRow = table.convertRowIndexToModel(row);
-					Vector rowValue = (Vector) rowData.get(modelRow);
+					// int modelRow = table.convertRowIndexToModel(row);
+					// Vector rowValue = (Vector) rowData.get(modelRow);
+					Vector rowValue = (Vector) rowData.get(row); // problems
+																	// getting a
+																	// row
+																	// from it
+																	// data
+																	// vector
 					selectedRows.add(rowValue);
 				}
 
@@ -321,7 +325,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 	}
 
 	public class DeleteRowFromCreditorsTableAction extends
-			AbstractTableAction<JTable, DefaultTableModel> {
+			AbstractTableAction<JTable, CreditorsTableModel> {
 
 		/**
  * 
@@ -329,7 +333,7 @@ class Jtabbedpane extends JFrame implements ActionListener {
 		private static final long serialVersionUID = 5133264544084101883L;
 
 		public DeleteRowFromCreditorsTableAction(JTable creditors,
-				DefaultTableModel model) {
+				CreditorsTableModel model) {
 			// TODO Auto-generated constructor stub
 			super(creditors, model);
 			putValue(NAME, "Delete selected rows");
@@ -350,12 +354,16 @@ class Jtabbedpane extends JFrame implements ActionListener {
 			System.out.println("...");
 			JTable table = getTable();
 			if (table.getSelectedRowCount() > 0) {
-				List<Vector> selectedRows = new ArrayList<>(25);
-				DefaultTableModel model = getModel();
-				Vector rowData = model.getDataVector();
+				List<Vector> selectedRows = new ArrayList<>();
+				CreditorsTableModel model = getModel();
+				if (model == null) {
+					System.out.println("null");
+				}
+				Vector rowData = model.getDataVector(); // rowData is 0
 				for (int row : table.getSelectedRows()) {
-					int modelRow = table.convertRowIndexToModel(row);
-					Vector rowValue = (Vector) rowData.get(modelRow);
+					// int modelRow = table.convertRowIndexToModel(row);
+					Vector rowValue = (Vector) rowData.get(row);
+
 					selectedRows.add(rowValue);
 				}
 
@@ -377,7 +385,8 @@ class Jtabbedpane extends JFrame implements ActionListener {
 				public void tableChanged(TableModelEvent e) {
 					switch (e.getType()) {
 					case TableModelEvent.INSERT:
-						stock
+						StockTableModel stockmodel = new StockTableModel(
+								Tamashadb.columnNames, Tamashadb.visitdata);
 
 					case TableModelEvent.DELETE:
 

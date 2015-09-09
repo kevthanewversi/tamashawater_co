@@ -14,14 +14,14 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class DeleteRowFromTableAction extends
-		AbstractTableAction<JTable, DefaultTableModel> {
+		AbstractTableAction<JTable, CreditorsTableModel> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5133264544084101883L;
 
-	public DeleteRowFromTableAction(JTable creditors, DefaultTableModel model) {
+	public DeleteRowFromTableAction(JTable creditors, CreditorsTableModel model) {
 		// TODO Auto-generated constructor stub
 		super(creditors, model);
 		putValue(NAME, "Delete selected rows");

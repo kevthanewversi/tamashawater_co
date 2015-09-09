@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class CreditorsTable {
 	JTable creditors;
-	public static DefaultTableModel model;
+	public static CreditorsTableModel model;
 
 	public CreditorsTable(Object[][] visitdata, ArrayList columnNames) {
 		System.out.println(visitdata.length + "and" + columnNames.size());

@@ -13,9 +13,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public final class DeleteRowFromStockTableAction extends
-		AbstractStockTableAction<JTable, DefaultTableModel> {
+		AbstractStockTableAction<JTable, StockTableModel> {
 
-	public DeleteRowFromStockTableAction(JTable stock, DefaultTableModel model) {
+	public DeleteRowFromStockTableAction(JTable stock, StockTableModel model) {
 		// TODO Auto-generated constructor stub
 		super(stock, model);
 		putValue(NAME, "Delete selected rows");
@@ -37,7 +37,7 @@ public final class DeleteRowFromStockTableAction extends
 		JTable table = getTable();
 		if (table.getSelectedRowCount() > 0) {
 			List<Vector> selectedRows = new ArrayList<>(25);
-			DefaultTableModel model = getModel();
+			StockTableModel model = getModel();
 			Vector rowData = model.getDataVector();
 			for (int row : table.getSelectedRows()) {
 				int modelRow = table.convertRowIndexToModel(row);
